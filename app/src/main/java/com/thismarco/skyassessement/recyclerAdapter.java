@@ -1,5 +1,4 @@
-package com.example.skyassessmentdayproject;
-
+package com.thismarco.skyassessement;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

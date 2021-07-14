@@ -1,5 +1,4 @@
-package com.example.skyassessmentdayproject;
-
+package com.thismarco.skyassessement;
 public class Movie {
 
     private String movie;
