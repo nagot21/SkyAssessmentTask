@@ -19,6 +19,9 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     String jsonResponse;
+    private ArrayList<Movie> movielist;
+    private RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
         String url = "https://saman-mb.github.io/SkyMobileDeveloperAcademy/movies.json";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        recyclerView = findViewById(R.id.RecView);
+
+        movielist = new ArrayList<>();
+        setMovieInfo();
+        setAdapter();
 
         String response;
 
@@ -52,15 +61,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void editData(String s) throws JSONException {
-
-        JSONObject moviesInfo = new JSONObject();
+        JSONObject moviesInfo = new JSONObject(s);
+        Log.i("JSON", moviesInfo.toString());
         //moviesInfo
-        JSONArray movies = new JSONArray(moviesInfo.getJSONArray("movies"));
+        //JSONArray movies = new JSONArray(moviesInfo.getJSONArray("movies"));
+        JSONArray movies = new JSONArray(moviesInfo.getString("movies"));
+        //Log.i("Movies Number", String.valueOf(movies.length()));
+        for(int i = 0; i < movies.length(); i++){
+            Log.i("Movie Title", movies.getJSONObject(i).getString("title"));
+        }
+        //String title = movies.get(0).toString();
+        //Log.i("Movie Title", title);
+    }
 
-        String title = movies.get(0).toString();
-        Log.i("Movie Title", title);
-
+    private void setAdapter(){
+        recyclerAdapter adapter = new recyclerAdapter(movielist);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+    }
+    private void setMovieInfo(){
+        movielist.add(new Movie());
     }
 
 }
